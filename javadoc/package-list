@@ -1,0 +1,12 @@
+com.unisound.context
+com.unisound.sdk.asr
+com.unisound.sdk.asr.audiosource
+com.unisound.sdk.asr.impl
+com.unisound.sdk.asr.param
+com.unisound.sdk.asr.vad
+com.unisound.sdk.config
+com.unisound.sdk.tts
+com.unisound.sdk.tts.handler
+com.unisound.sdk.tts.impl
+com.unisound.sdk.tts.param
+com.unisound.sdk.utils

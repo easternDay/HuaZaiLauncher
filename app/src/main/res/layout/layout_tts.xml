@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_grey"
+    android:orientation="vertical"
+    >
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="80dp"
+      android:layout_alignParentBottom="true"
+      android:background="@color/color_white"
+      android:gravity="center"
+      android:orientation="horizontal"
+      android:paddingLeft="50dp"
+      android:paddingRight="50dp"
+      >
+
+    <Button
+        android:id="@+id/butStartTts"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="50dp"
+        android:layout_weight="1"
+        android:onClick="startTts"
+        android:text="播报TTS"
+        />
+
+    <Button
+        android:id="@+id/butEndTts"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:onClick="endTts"
+        android:text="结束TTS"
+        />
+
+  </LinearLayout>
+
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_marginBottom="80dp"
+      >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:id="@+id/ll_play_mode"
+          style="@style/SettingItem"
+          android:onClick="onPlayModelClick"
+          >
+
+        <TextView
+            style="@style/SettingItemName"
+            android:text="play_mode"
+            />
+
+        <TextView
+            android:id="@+id/tv_play_mode"
+            style="@style/SettingItemValue"
+            android:gravity="right"
+            android:text="ONLINE"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_front_model"
+          style="@style/SettingItem"
+          >
+
+        <TextView
+            style="@style/SettingItemName"
+            android:text="FrontModel"
+            />
+
+        <TextView
+            android:id="@+id/tv_front_model"
+            style="@style/SettingItemValue"
+            android:gravity="right"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_back_model"
+          style="@style/SettingItem"
+          android:onClick="onBackModelClick"
+          >
+
+        <TextView
+            style="@style/SettingItemName"
+            android:text="BackModel"
+            />
+
+        <TextView
+            android:id="@+id/tv_back_model"
+            style="@style/SettingItemValue"
+            android:gravity="right"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_voice_name"
+          style="@style/SettingItem"
+          android:onClick="onVoiceNameClick"
+          >
+        <TextView
+            style="@style/SettingItemName"
+            android:text="VoiceName"
+            />
+
+        <TextView
+            android:id="@+id/tv_voice_name"
+            style="@style/SettingItemValue"
+            android:gravity="right"
+            android:text="xiaoli"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_speed"
+          style="@style/SettingItem"
+          >
+
+        <TextView
+            android:id="@+id/tv_speed"
+            style="@style/SettingItemName"
+            android:text="play_speed"
+            />
+
+        <SeekBar
+            android:id="@+id/sb_speed"
+            style="@style/SettingItemValue"
+            android:max="100"
+            android:progress="70"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_volume"
+          style="@style/SettingItem"
+          >
+
+        <TextView
+            android:id="@+id/tv_volume"
+            style="@style/SettingItemName"
+            android:text="volume"
+            />
+
+        <SeekBar
+            android:id="@+id/sb_volume"
+            style="@style/SettingItemValue"
+            android:max="100"
+            android:progress="50"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_bright"
+          style="@style/SettingItem"
+          >
+
+        <TextView
+            android:id="@+id/tv_bright"
+            style="@style/SettingItemName"
+            android:text="bright"
+            />
+
+        <SeekBar
+            android:id="@+id/sb_bright"
+            style="@style/SettingItemValue"
+            android:max="100"
+            android:progress="70"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          style="@style/SettingItem">
+
+        <TextView
+            style="@style/SettingItemName"
+            android:text="FrontSilence"
+            />
+
+        <EditText
+            android:id="@+id/et_front_sil"
+            style="@style/SettingItemValue"
+            android:inputType="number"
+            android:gravity="right"
+            android:text="50"
+            />
+      </LinearLayout>
+
+      <LinearLayout style="@style/SettingItem">
+        <TextView
+            style="@style/SettingItemName"
+            android:text="BackSilent"
+            />
+
+        <EditText
+            android:id="@+id/et_back_sil"
+            style="@style/SettingItemValue"
+            android:inputType="number"
+            android:gravity="right"
+            android:text="50"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          android:id="@+id/ll_sample_rate"
+          style="@style/SettingItem"
+          >
+        <TextView
+            style="@style/SettingItemName"
+            android:text="SampleRate"
+            />
+
+        <EditText
+            android:id="@+id/et_sample_rate"
+            style="@style/SettingItemValue"
+            android:text="16000"
+            android:gravity="right"
+            android:inputType="number"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          style="@style/SettingItem"
+          android:layout_height="260dp"
+          android:gravity="left"
+          android:orientation="vertical"
+          >
+        <TextView
+            style="@style/SettingItemName"
+            android:layout_marginTop="20dp"
+            android:gravity="left"
+            android:text="Text"
+            />
+
+        <EditText
+            android:id="@+id/et_default_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left|top"
+            android:gravity="left|top"
+            android:textSize="12sp"
+            android:text="@string/default_tts"
+            />
+      </LinearLayout>
+
+    </LinearLayout>
+  </ScrollView>
+</RelativeLayout>

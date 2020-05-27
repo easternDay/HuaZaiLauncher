@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="cn.EasternDay.HuaZai">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/> <!-- 网络权限 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <application
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme">
+        <activity android:name="cn.EasertnDay.HuaZai.SecondaryPage.VoicePage"
+                  android:configChanges="orientation|keyboardHidden|screenSize"
+                  android:screenOrientation="landscape"
+                  android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.SecondaryPage.TZXX"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="landscape"
+                android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.SecondaryPage.GJX"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="landscape"
+                android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.SecondaryPage.ZXXL"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="landscape"
+                android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.SecondaryPage.KWTBX"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="landscape"
+                android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.LauncherActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="landscape"
+                android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="cn.EasertnDay.HuaZai.HuaZaiActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.BasicMainActivity"
+                android:screenOrientation="landscape">
+        </activity>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.KwsTestActivity"
+                android:label="KWS测试"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.RecordActivity"
+                android:label="录音测试"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.TtsActivity"
+                android:label="语音合成"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.WakeupActivity"
+                android:label="唤醒词"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.OfflineAsrActivity"
+                android:label="混合识别"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.OfflineSlotAsrActivity"
+                android:label="动态词表离线识别"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.OnlineAsrActivity"
+                android:label="在线识别"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.OneShotAsrActivity"
+                android:label="OneShot"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.TextAsrActivity"
+                android:label="语音转文字"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.FileAsrActivity"
+                android:label="文件转文字"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.MedicalAsrActivity"
+                android:label="医疗语音识别"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.VprActivity"
+                android:label="本地VPR"
+                android:screenOrientation="landscape"/>
+        <activity
+                android:name="cn.EasertnDay.HuaZai.DialectTestActivity"
+                android:label="在线识别方言测试"
+                android:screenOrientation="landscape"/>
+    </application>
+
+</manifest>

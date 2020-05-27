@@ -1,0 +1,32 @@
+<base_handle>
+  <base_target>
+    <base_target_mode>1</base_target_mode>
+  </base_target>
+  <norm>
+    <norm_mode>0</norm_mode>
+  </norm>
+  <noise>
+    <noise_mode>0</noise_mode>
+  </noise>
+  <xvector_extract>
+    <xvector_extractor>extractor.dat</xvector_extractor>
+  </xvector_extract>
+  <plda>
+    <plda_model>plda.dat</plda_model>
+    <mean_ive>mean.dat</mean_ive>
+  </plda>
+  <znorm_data>
+    <ivector_amount>1438</ivector_amount>
+    <ivector_dim>512</ivector_dim>
+    <znorm_data>znorm.dat</znorm_data>
+  </znorm_data>
+  <tnorm_data>
+    <ivector_amount>15</ivector_amount>
+    <ivector_dim>512</ivector_dim>
+    <tnorm_data>tnorm.dat</tnorm_data>
+  </tnorm_data>
+  <noise_data>
+    <data_size>320000</data_size>
+    <noise_data>noise.dat</noise_data>
+  </noise_data>
+</base_handle>

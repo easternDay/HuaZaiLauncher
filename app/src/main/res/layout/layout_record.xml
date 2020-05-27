@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:orientation="vertical"
+    >
+  <LinearLayout
+      android:id="@+id/ll_record_data"
+      style="@style/SettingItem"
+      android:onClick="onDataClick"
+      >
+
+    <TextView
+        style="@style/SettingItemName"
+        android:text="录音数据"
+        />
+
+    <TextView
+        android:id="@+id/tv_record_data"
+        style="@style/SettingItemValue"
+        android:gravity="right"
+        android:text="asr"
+        />
+  </LinearLayout>
+  <Button
+      android:id="@+id/butStartRecord"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:onClick="onStartRecordClick"
+      android:text="开始录音"
+      />
+  <Button
+      android:id="@+id/butStopRecord"
+      android:layout_width="match_parent"
+      android:layout_height="60dp"
+      android:onClick="onStopRecordClick"
+      android:text="停止录音"
+      />
+</LinearLayout>

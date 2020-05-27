@@ -1,0 +1,4 @@
+1.把Uni4micHalJNI.java和客户mic信息给到路博
+2.路博给出相应的so
+3.把so push到 system/lib目录下
+4.sdk中使用JniAudioSource

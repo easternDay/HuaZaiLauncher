@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="请将工程目录下面的test_grammar.dat push到/sdcard/unisound目录下面 没有这个文件夹 请先新建 离线命令 声音小一点/声音大一点"
+        />
+    <Button
+        android:id="@+id/butStartAsr"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="onStartAsr"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/bg_item"
+        android:text="开始混合(离线and在线)识别"
+        />
+    <Button
+        android:id="@+id/butEnd"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="1dp"
+        android:onClick="onEndAsr"
+        android:background="@drawable/bg_item"
+        android:text="结束识别"
+        />
+    <TextView
+        android:id="@+id/textOffline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <TextView
+        android:id="@+id/textOnline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+  </LinearLayout>
+</ScrollView>

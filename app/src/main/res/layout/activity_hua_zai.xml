@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="cn.EasertnDay.HuaZai.iLauncher.HuaZaiActivity">
+
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:id="@+id/TokenSession" app:layout_constraintStart_toEndOf="@+id/getToken"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:lineSpacingExtra="8sp" android:textSize="30sp"/>
+    <Button
+            android:text="获取Token"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:id="@+id/getToken" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toStartOf="@+id/TokenSession"
+            android:textSize="24sp"/>
+    <Button
+            android:text="原版Demo测试"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:id="@+id/ToDemo"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/ReturnInfo" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintBottom_toTopOf="@+id/ToDemo"
+            app:layout_constraintTop_toBottomOf="@+id/Question" android:textSize="24sp"/>
+    <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:id="@+id/Question" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/TokenSession"
+            android:textSize="24sp"/>
+</android.support.constraint.ConstraintLayout>

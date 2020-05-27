@@ -1,0 +1,5 @@
+#JSGF V1.0 utf-8 cn;
+grammar wakeup;
+public <main> = ( "<s>" (
+你好华仔
+) "</s>" );

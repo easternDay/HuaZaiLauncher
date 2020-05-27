@@ -1,0 +1,23 @@
+#JSGF V1.0 utf-8 cn;
+grammar test_jsgf;
+public <main> = ( "<s>" ( [<asr_wakeup_words_slot>] ([<Prefix>] (
+<VolumeUp>
+|<VolumeDown>
+|<UserDef>
+) ) )"</s>" );
+
+<UserDef> = ("<user_def_>"(
+ (<Domain_userdef_commands_slot>)
+)"</user_def_>");
+
+<VolumeUp> = ("<Domain_global_setting_volume_up_>" (
+ 声音大一点 |音量大一点 | 大点声音 |声音大点 | 音量大点 | 声音大点吧
+)"</Domain_global_setting_volume_up_>");
+
+<VolumeDown> = ("<Domain_global_setting_volume_down_>"(
+ 声音小一点  |  音量小一点 | 小点声音 | 声音小点 | 音量小点 | 你声音太大了| 你打断我说话了
+)"</Domain_global_setting_volume_down_>");
+
+<Prefix> = ( 请帮我 | 帮我 | 请 );
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="vertical"
+      >
+    <TextView
+        android:id="@+id/textInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="你可以你好魔方+命令一起说 也可以停顿再说"
+        />
+    <Button
+        android:id="@+id/butStartWakeup"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="onStartWakeup"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/bg_item"
+        android:text="开始唤醒"
+        />
+    <Button
+        android:id="@+id/butEnd"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="1dp"
+        android:onClick="onEndAsr"
+        android:background="@drawable/bg_item"
+        android:text="结束识别"
+        />
+    <TextView
+        android:id="@+id/textResult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+  </LinearLayout>
+</ScrollView>

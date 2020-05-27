@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@color/color_grey"
+      android:orientation="vertical"
+      >
+
+    <LinearLayout
+        style="@style/SettingItem"
+        android:background="@drawable/bg_item"
+        android:onClick="onFilterNameClick"
+        >
+
+      <TextView
+          style="@style/SettingItemName"
+          android:text="FilterName"
+          />
+
+      <TextView
+          android:id="@+id/tv_filter_name"
+          style="@style/SettingItemValue"
+          android:gravity="right"
+          android:text="cantonese"
+          />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_vad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          style="@style/SettingItem"
+          android:background="@drawable/bg_item"
+          >
+
+        <TextView
+            style="@style/SettingItemName"
+            android:text="ServerVad"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            />
+
+        <CheckBox
+            android:id="@+id/cb_server_vad"
+            style="@style/SettingItemValue"
+            android:layout_width="wrap_content"
+            android:checked="true"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          style="@style/SettingItem"
+          android:background="@drawable/bg_item"
+          >
+
+        <TextView
+            style="@style/SettingItemName"
+            android:text="LocalVad"
+            />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            />
+
+        <CheckBox
+            android:id="@+id/cb_local_vad"
+            style="@style/SettingItemValue"
+            android:layout_width="wrap_content"
+            android:checked="true"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          style="@style/SettingItem"
+          android:background="@drawable/bg_item"
+          >
+
+        <TextView
+            style="@style/SettingItemName"
+            android:text="FrontSilent"
+            />
+
+        <EditText
+            android:id="@+id/et_front_sil"
+            style="@style/SettingItemValue"
+            android:gravity="right"
+            android:inputType="numberDecimal"
+            android:text="5.0"
+            />
+      </LinearLayout>
+
+      <LinearLayout
+          style="@style/SettingItem"
+          android:background="@drawable/bg_item"
+          >
+
+        <TextView
+            style="@style/SettingItemName"
+            android:text="BackSilent"
+            />
+
+        <EditText
+            android:id="@+id/et_back_sil"
+            style="@style/SettingItemValue"
+            android:gravity="right"
+            android:inputType="numberDecimal"
+            android:text="0.5"
+            />
+      </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/butStartAsr"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:onClick="onStartAsr"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/bg_item"
+        android:text="开始云端识别"
+        />
+
+    <Button
+        android:id="@+id/butEnd"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="1dp"
+        android:onClick="onEndAsr"
+        android:background="@drawable/bg_item"
+        android:text="结束识别"
+        />
+
+    <TextView
+        android:id="@+id/txtAsr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@color/color_white"
+        />
+
+    <TextView
+        android:id="@+id/txtNlu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="1dp"
+        android:background="@color/color_white"
+        />
+
+  </LinearLayout>
+</ScrollView>
