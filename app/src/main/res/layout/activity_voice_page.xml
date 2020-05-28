@@ -67,6 +67,7 @@
             android:layout_marginStart="50dp"/>
     <TextView
             android:text='"中"字怎么组词？'
+            android:textColor="#D2691E"
             android:background="@drawable/img_dikuang"
             android:textSize="36sp"
             android:gravity="center"
@@ -75,6 +76,7 @@
             app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
     <TextView
             android:text='中国'
+            android:textColor="#D2691E"
             android:background="@color/color_white"
             android:textSize="36sp"
             android:gravity="center"

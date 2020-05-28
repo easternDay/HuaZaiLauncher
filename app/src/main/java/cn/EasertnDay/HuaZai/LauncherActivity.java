@@ -371,9 +371,12 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
         if (event == AsrEvent.ASR_EVENT_WAKEUP_RESULT) {
             beeper.startTone(ToneGenerator.TONE_DTMF_S, 30);
             if (SdkParam.getInstance().getAudioSourceType() == AudioSourceType.JNI) {
-                unisoundAsrEngine.startAsr(false);
+                Intent myIntent = new Intent(context, VoicePage.class);
+                startActivity(myIntent);
+                //unisoundAsrEngine.startAsr(false);
             }
         }
+        /*
         if (event == AsrEvent.ASR_EVENT_ASR_RESULT) {
             try {
                 JSONObject jsonObject = new JSONObject(result);
@@ -411,14 +414,12 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
                             }
                             unisoundAsrEngine.startWakeUp();
                             unisoundAsrEngine.startAsr(false);
-                            /*
                             else if (result.contains("nlu")) {
                                 //Log.d("我带你们打", "返回结果1: " + result);
                                 Say.setText(result);
                                 unisoundAsrEngine.startWakeUp();
                                 unisoundAsrEngine.startAsr(false);
                             }
-                            */
                         }
 
                         @Override
@@ -431,6 +432,7 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
                 unisoundAsrEngine.startWakeUp();
             }
         }
+         */
     }
 
     @Override

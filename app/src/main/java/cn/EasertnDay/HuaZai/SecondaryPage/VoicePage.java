@@ -3,6 +3,7 @@ package cn.EasertnDay.HuaZai.SecondaryPage;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
+import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.*;
 import android.support.v7.app.AppCompatActivity;
@@ -65,16 +66,20 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
         Ans = findViewById(R.id.AnwserText);
 
         WebView webView = findViewById(R.id.WebView);
-        webView.loadUrl("baidu.com");
-        webView.setWebViewClient(new WebViewClient() {
-            //设置在webView点击打开的新网页在当前界面显示,而不跳转到新的浏览器中
+        webView.loadUrl("http://baidu.com");
+        //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
+        webView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl("baidu.com");
+                // TODO Auto-generated method stub
+                //返回值是true的时候控制去WebView打开，为false调用系统浏览器或第三方浏览器
+                view.loadUrl(url);
                 return true;
             }
         });
 
+        //哔声发声器
+        beeper = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
         //语音
         unisoundAsrEngine = VoicePresenter.getInstance().getUnisoundAsrEngine();
         VoicePresenter.getInstance().setAsrListener((IAsrResultListener) context);
@@ -103,6 +108,12 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
 
     @Override
     public void onResult(int event, String result) {
+        if (event == AsrEvent.ASR_EVENT_WAKEUP_RESULT) {
+            beeper.startTone(ToneGenerator.TONE_DTMF_S, 30);
+            if (SdkParam.getInstance().getAudioSourceType() == AudioSourceType.JNI) {
+                unisoundAsrEngine.startAsr(false);
+            }
+        }
         if (event == AsrEvent.ASR_EVENT_ASR_RESULT) {
             try {
                 JSONObject jsonObject = new JSONObject(result);
