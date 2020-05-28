@@ -1,5 +1,6 @@
 package cn.EasertnDay.HuaZai.SecondaryPage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.view.View;
 import cn.EasternDay.HuaZai.R;
 
 public class TZXX extends AppCompatActivity {
+    Activity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +23,21 @@ public class TZXX extends AppCompatActivity {
             //设置按钮的页面跳转-设置页面
             case R.id.button_return:
                 finish();
+                break;
+            case R.id.button_TGS:
+                myIntent = getPackageManager().getLaunchIntentForPackage("com.hhdd.kadahd");
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                context.startActivity(myIntent);
+                break;
+            case R.id.button_HBBD:
+                myIntent = getPackageManager().getLaunchIntentForPackage("com.unisound.read");
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                context.startActivity(myIntent);
+                break;
+            case R.id.button_YXKT:
+                myIntent = getPackageManager().getLaunchIntentForPackage("com.wyt.classxiaoyou");
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                context.startActivity(myIntent);
                 break;
             default:
                 break;

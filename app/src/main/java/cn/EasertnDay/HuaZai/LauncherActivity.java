@@ -1,6 +1,7 @@
 package cn.EasertnDay.HuaZai;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -37,9 +38,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class LauncherActivity extends AppCompatActivity implements IAsrResultListener {
@@ -76,6 +75,19 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
         }
     };
 
+    //定时触发
+    /*
+    Timer timer = new Timer();
+    TimerTask task = new TimerTask() {
+        public void run() {
+            Message message = new Message();
+            message.what = 66;
+            handler.sendMessage(message);
+        }
+    };
+
+     */
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +108,9 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
         wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);//WIFI信号
         wifiInfo = wifiManager.getConnectionInfo();//WIFI信息
         WifiIcon = findViewById(R.id.wifiIcon);//WIFI图标
+
+        //定时器
+        //timer.schedule(task, 1000 * 5, 1000 * 1); //启动timer
 
         //增加唤醒词
         wakeUpList.add("你好华仔");
@@ -368,16 +383,25 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
 
     @Override
     public void onResult(int event, String result) {
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        String runningActivity = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
+        Log.d("我带你们打", runningActivity);
+        Log.d("我带你们打", String.valueOf(runningActivity.indexOf("LauncherActivity") != -1));
+        Log.d("我带你们打", String.valueOf(runningActivity.indexOf("VoicePage") != -1));
+        Log.d("我带你们打", String.valueOf(event == AsrEvent.ASR_EVENT_ASR_RESULT));
         if (event == AsrEvent.ASR_EVENT_WAKEUP_RESULT) {
             beeper.startTone(ToneGenerator.TONE_DTMF_S, 30);
             if (SdkParam.getInstance().getAudioSourceType() == AudioSourceType.JNI) {
-                Intent myIntent = new Intent(context, VoicePage.class);
-                startActivity(myIntent);
-                //unisoundAsrEngine.startAsr(false);
+                if (runningActivity.indexOf("LauncherActivity") != -1) {
+                    Intent myIntent = new Intent(context, VoicePage.class);
+                    startActivity(myIntent);
+                } else {
+                    unisoundAsrEngine.startAsr(false);
+                }
             }
         }
-        /*
-        if (event == AsrEvent.ASR_EVENT_ASR_RESULT) {
+        if (event == AsrEvent.ASR_EVENT_ASR_RESULT && runningActivity.indexOf("VoicePage") != -1) {
+            Log.d("我带你们打", result);
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String asrResult = jsonObject.getString("asr_recongize");
@@ -414,12 +438,6 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
                             }
                             unisoundAsrEngine.startWakeUp();
                             unisoundAsrEngine.startAsr(false);
-                            else if (result.contains("nlu")) {
-                                //Log.d("我带你们打", "返回结果1: " + result);
-                                Say.setText(result);
-                                unisoundAsrEngine.startWakeUp();
-                                unisoundAsrEngine.startAsr(false);
-                            }
                         }
 
                         @Override
@@ -430,9 +448,9 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
                 }
             } catch (Exception e) {
                 unisoundAsrEngine.startWakeUp();
+                unisoundAsrEngine.startAsr(false);
             }
         }
-         */
     }
 
     @Override

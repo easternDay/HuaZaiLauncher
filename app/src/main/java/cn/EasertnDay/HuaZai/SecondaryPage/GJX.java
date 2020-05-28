@@ -1,12 +1,15 @@
 package cn.EasertnDay.HuaZai.SecondaryPage;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import cn.EasternDay.HuaZai.R;
 
 public class GJX extends AppCompatActivity {
+    Activity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,6 +24,26 @@ public class GJX extends AppCompatActivity {
             //设置按钮的页面跳转-设置页面
             case R.id.button_return:
                 finish();
+                break;
+            case R.id.button_ZYFY:
+                myIntent = getPackageManager().getLaunchIntentForPackage("com.unisound.translate");
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                context.startActivity(myIntent);
+                break;
+            case R.id.button_CCCW:
+                myIntent = getPackageManager().getLaunchIntentForPackage("com.unisound.kar.fruit.recognition");
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                context.startActivity(myIntent);
+                break;
+            case R.id.button_MGTV:
+                myIntent = getPackageManager().getLaunchIntentForPackage("com.mgtv.tv");
+                myIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+                context.startActivity(myIntent);
+                break;
+            case R.id.button_YJLS:
+                Uri uri = Uri.parse("https://www.chinlingo.com/how-it-works/");
+                myIntent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(myIntent);
                 break;
             default:
                 break;

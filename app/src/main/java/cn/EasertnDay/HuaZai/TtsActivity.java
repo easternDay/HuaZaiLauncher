@@ -115,7 +115,6 @@ public class TtsActivity extends AppCompatActivity {
       unisoundTtsEngine.setTtsOption(TtsOption.TTS_OPTION_BACK_SIL,
           Integer.parseInt(etBackSil.getText().toString()));
     }
-    Log.i("ASir", String.valueOf(unisoundTtsEngine.isInit()));
     unisoundTtsEngine.playTts(etDefaultName.getText().toString());
   }
 

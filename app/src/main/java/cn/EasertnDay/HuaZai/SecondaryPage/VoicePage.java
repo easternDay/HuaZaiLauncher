@@ -1,6 +1,8 @@
 package cn.EasertnDay.HuaZai.SecondaryPage;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.media.AudioManager;
@@ -10,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -22,6 +25,10 @@ import cn.EasternDay.HuaZai.R;
 import com.unisound.sdk.asr.AsrEvent;
 import com.unisound.sdk.asr.UnisoundAsrEngine;
 import com.unisound.sdk.asr.impl.IAsrResultListener;
+import com.unisound.sdk.tts.TtsOption;
+import com.unisound.sdk.tts.UnisoundTtsEngine;
+import com.unisound.sdk.tts.audiotrack.AndroidAudioTrack;
+import com.unisound.sdk.tts.param.UnisoundTtsPlayMode;
 import com.unisound.sdk.utils.AssetsUtils;
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
@@ -39,7 +46,7 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
     Activity context = this;
 
     //显示文本
-    TextView Say,Ans;
+    TextView Say, Ans;
 
     //语音识别需要的
     private UnisoundAsrEngine unisoundAsrEngine;
@@ -57,6 +64,9 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
         }
     };
 
+    //语音合成需要的
+    private UnisoundTtsEngine unisoundTtsEngine;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +78,7 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
         WebView webView = findViewById(R.id.WebView);
         webView.loadUrl("http://baidu.com");
         //覆盖WebView默认使用第三方或系统默认浏览器打开网页的行为，使网页用WebView打开
-        webView.setWebViewClient(new WebViewClient(){
+        webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 // TODO Auto-generated method stub
@@ -90,6 +100,22 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
         } else {
             Toast.makeText(context, "唤醒失败", Toast.LENGTH_SHORT).show();
         }
+
+        //语音合成
+        unisoundTtsEngine = VoicePresenter.getInstance().getUnisoundTtsEngine();
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        copyAssetsModel();
+        unisoundTtsEngine.setTtsOption(TtsOption.TTS_OPTION_PRINT_DEBUG_LOG, false);
+        unisoundTtsEngine.setTtsOption(TtsOption.TTS_PLAY_MODE, UnisoundTtsPlayMode.ONLINE);
+        unisoundTtsEngine.setTtsOption(TtsOption.TTS_OPTION_SPEED, 75);
+        unisoundTtsEngine.setTtsOption(TtsOption.TTS_OPTION_VOLUME, 1000);
+        unisoundTtsEngine.setTtsOption(TtsOption.TTS_OPTION_BRIGHT, 50);
+        unisoundTtsEngine.setTtsOption(TtsOption.TTS_SAMPLE_RATE, 16000);
+        unisoundTtsEngine.setAudioTrack(new AndroidAudioTrack(16000));
+        unisoundTtsEngine.setTtsOption(TtsOption.TTS_OPTION_FRONT_SIL, 50);
+        unisoundTtsEngine.setTtsOption(TtsOption.TTS_OPTION_BACK_SIL, 50);
+        unisoundTtsEngine.setTtsOption(TtsOption.TTS_OPTION_VOICE_NAME, "tangtang");
+        unisoundTtsEngine.playTts("小朋友请在这里向我提问吧~");
     }
 
     //设置按钮点击监听（全部）
@@ -108,18 +134,30 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
 
     @Override
     public void onResult(int event, String result) {
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        String runningActivity = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
+        Log.d("我带你们打", runningActivity);
+        Log.d("我带你们打", String.valueOf(runningActivity.indexOf("LauncherActivity") != -1));
+        Log.d("我带你们打", String.valueOf(runningActivity.indexOf("VoicePage") != -1));
+        Log.d("我带你们打", String.valueOf(event == AsrEvent.ASR_EVENT_ASR_RESULT));
+        Log.d("我带你们打", String.valueOf(unisoundAsrEngine.startAsr(false)));
         if (event == AsrEvent.ASR_EVENT_WAKEUP_RESULT) {
             beeper.startTone(ToneGenerator.TONE_DTMF_S, 30);
             if (SdkParam.getInstance().getAudioSourceType() == AudioSourceType.JNI) {
-                unisoundAsrEngine.startAsr(false);
+                if (runningActivity.indexOf("LauncherActivity") != -1) {
+                    Intent myIntent = new Intent(context, VoicePage.class);
+                    startActivity(myIntent);
+                } else {
+                    unisoundAsrEngine.startWakeUp();
+                    unisoundAsrEngine.startAsr(false);
+                }
             }
         }
-        if (event == AsrEvent.ASR_EVENT_ASR_RESULT) {
+        if (event == AsrEvent.ASR_EVENT_ASR_RESULT && runningActivity.indexOf("VoicePage") != -1) {
+            Log.d("我带你们打", result);
             try {
                 JSONObject jsonObject = new JSONObject(result);
                 String asrResult = jsonObject.getString("asr_recongize");
-                Log.d("我裂开了", asrResult+TextUtils.isEmpty(asrResult));
-                Say.setText(asrResult);
                 if (!TextUtils.isEmpty(asrResult)) {
                     Say.setText(asrResult);
 
@@ -151,7 +189,7 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
                                 //Say.setText("华仔听不懂，请下次再来问我吧！");
                                 handler.sendMessage(handler.obtainMessage(22, "华仔听不懂，请下次再来问我吧！"));
                             }
-                            //unisoundAsrEngine.startWakeUp();
+                            unisoundAsrEngine.startWakeUp();
                             unisoundAsrEngine.startAsr(false);
                         }
 
@@ -163,6 +201,7 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
                 }
             } catch (Exception e) {
                 unisoundAsrEngine.startWakeUp();
+                unisoundAsrEngine.startAsr(false);
             }
         }
     }
@@ -212,5 +251,26 @@ public class VoicePage extends AppCompatActivity implements IAsrResultListener {
                 }
             }
         }).start();
+    }
+
+
+    private void copyAssetsModel() {
+        AssetManager assetManager = this.getAssets();
+        try {
+            String[] files = assetManager.list("");
+            for (String file : files) {
+                if (file.startsWith("frontend")) {
+                    if (!(new File(Config.TTS_PATH + file).exists())) {
+                        AssetsUtils.copyAssetsFile(this, file, Config.TTS_PATH + file, false);
+                    }
+                } else if (file.startsWith("backend")) {
+                    if (!(new File(Config.TTS_PATH + file).exists())) {
+                        AssetsUtils.copyAssetsFile(this, file, Config.TTS_PATH + file, false);
+                    }
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

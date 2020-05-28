@@ -1,5 +1,6 @@
 package cn.EasertnDay.HuaZai.SecondaryPage;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +11,7 @@ import cn.EasternDay.HuaZai.R;
 
 public class KWTBX extends AppCompatActivity {
 
-    KWTBX context = this;
+    Activity context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
