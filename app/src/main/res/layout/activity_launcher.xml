@@ -120,7 +120,7 @@
             app:layout_constraintEnd_toStartOf="@id/HuazaiImage">
 
         <TextView
-                android:text='请对我说“你好华仔”或点击我\n比如问我"中"怎么组'
+                android:text='请对我说“你好华仔”\n比如问我"中"怎么组'
                 android:background="@drawable/img_duihuakuang"
                 android:layout_width="500dp"
                 android:layout_height="200dp" android:id="@+id/textView"

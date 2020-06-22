@@ -2,10 +2,7 @@ package cn.EasertnDay.HuaZai;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -14,10 +11,12 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.media.session.MediaSession;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.*;
 import android.provider.Settings;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -41,7 +40,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
-public class LauncherActivity extends AppCompatActivity implements IAsrResultListener {
+public class LauncherActivity extends AppCompatActivity {
 
     Activity context = this;
 
@@ -58,36 +57,6 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
     WifiManager wifiManager;//WIFI信号
     WifiInfo wifiInfo;//WIFI信息
     ImageView WifiIcon;//WIFI图标
-
-    //语音识别需要的
-    private UnisoundAsrEngine unisoundAsrEngine;
-    private ToneGenerator beeper;
-    private HashSet<String> wakeUpList = new HashSet<>();
-    private Handler handler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == 22) {
-                String model = (String) msg.obj;
-                Say.setText(model);
-            }
-            unisoundAsrEngine.startWakeUp();
-        }
-    };
-
-    //定时触发
-    /*
-    Timer timer = new Timer();
-    TimerTask task = new TimerTask() {
-        public void run() {
-            Message message = new Message();
-            message.what = 66;
-            handler.sendMessage(message);
-        }
-    };
-
-     */
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,33 +77,6 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
         wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);//WIFI信号
         wifiInfo = wifiManager.getConnectionInfo();//WIFI信息
         WifiIcon = findViewById(R.id.wifiIcon);//WIFI图标
-
-        //定时器
-        //timer.schedule(task, 1000 * 5, 1000 * 1); //启动timer
-
-        //增加唤醒词
-        wakeUpList.add("你好华仔");
-        wakeUpList.add("你好");
-        //哔声发声器
-        beeper = new ToneGenerator(AudioManager.STREAM_ALARM, 100);
-        //模型复制
-        VoicePresenter.getInstance().init(this.getApplicationContext());
-        copyTtsModel();
-        //延时操作
-        String token = (String) VoicePresenter.getInstance()
-                .getUnisoundAsrEngine()
-                .getOption(AsrOption.ASR_OPTION_DEVICE_TOKEN);
-        Log.w("WDNMD", token);
-
-        unisoundAsrEngine = VoicePresenter.getInstance().getUnisoundAsrEngine();
-        VoicePresenter.getInstance().setAsrListener((IAsrResultListener) context);
-        unisoundAsrEngine.setWakeUpWord(wakeUpList, wakeUpList);
-
-        if (unisoundAsrEngine.startWakeUp()) {
-            Toast.makeText(context, "唤醒成功", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "唤醒失败", Toast.LENGTH_SHORT).show();
-        }
 
         //触摸设置进入调试
         SettingButton.setOnTouchListener(new View.OnTouchListener() {
@@ -380,123 +322,4 @@ public class LauncherActivity extends AppCompatActivity implements IAsrResultLis
             }
         }
     };
-
-    @Override
-    public void onResult(int event, String result) {
-        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        String runningActivity = activityManager.getRunningTasks(1).get(0).topActivity.getClassName();
-        Log.d("我带你们打", runningActivity);
-        Log.d("我带你们打", String.valueOf(runningActivity.indexOf("LauncherActivity") != -1));
-        Log.d("我带你们打", String.valueOf(runningActivity.indexOf("VoicePage") != -1));
-        Log.d("我带你们打", String.valueOf(event == AsrEvent.ASR_EVENT_ASR_RESULT));
-        if (event == AsrEvent.ASR_EVENT_WAKEUP_RESULT) {
-            beeper.startTone(ToneGenerator.TONE_DTMF_S, 30);
-            if (SdkParam.getInstance().getAudioSourceType() == AudioSourceType.JNI) {
-                if (runningActivity.indexOf("LauncherActivity") != -1) {
-                    Intent myIntent = new Intent(context, VoicePage.class);
-                    startActivity(myIntent);
-                } else {
-                    unisoundAsrEngine.startAsr(false);
-                }
-            }
-        }
-        if (event == AsrEvent.ASR_EVENT_ASR_RESULT && runningActivity.indexOf("VoicePage") != -1) {
-            Log.d("我带你们打", result);
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String asrResult = jsonObject.getString("asr_recongize");
-                if (!TextUtils.isEmpty(asrResult)) {
-                    Say.setText(asrResult);
-
-                    OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                            .connectTimeout(60 * 1000, TimeUnit.MILLISECONDS)
-                            .readTimeout(5 * 60 * 1000, TimeUnit.MILLISECONDS)
-                            .writeTimeout(5 * 60 * 1000, TimeUnit.MILLISECONDS)
-                            .build();
-                    final Request request = new Request.Builder()
-                            .url("http://39.98.123.42:5000/chatbot?question=" + asrResult)
-                            .get()//默认就是GET请求，可以不写
-                            .build();
-                    Call call = okHttpClient.newCall(request);
-                    call.enqueue(new Callback() {
-                        @Override
-                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                            String ret = Objects.requireNonNull(response.body()).string();
-                            Log.d("我带你们打", "返回的ret: " + ret);
-                            try {
-                                JSONObject resultObject = new JSONObject(ret);
-                                String myAsrResult = resultObject.getString("data");
-                                Log.d("我带你们打", "onResponse: " + myAsrResult);
-                                if (!ret.isEmpty()) {
-                                    //Say.setText(myAsrResult);
-                                    handler.sendMessage(handler.obtainMessage(22, myAsrResult));
-                                }
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                                //Say.setText("华仔听不懂，请下次再来问我吧！");
-                                handler.sendMessage(handler.obtainMessage(22, "华仔听不懂，请下次再来问我吧！"));
-                            }
-                            unisoundAsrEngine.startWakeUp();
-                            unisoundAsrEngine.startAsr(false);
-                        }
-
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Log.d("我带你们打", "onFailure: " + e.toString());
-                        }
-                    });
-                }
-            } catch (Exception e) {
-                unisoundAsrEngine.startWakeUp();
-                unisoundAsrEngine.startAsr(false);
-            }
-        }
-    }
-
-    @Override
-    public void onEvent(int event) {
-
-    }
-
-    @Override
-    public void onError(int error) {
-        unisoundAsrEngine.startWakeUp();
-    }
-
-    @Override
-    public void onSessionId(String sessionId) {
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        handler.removeCallbacks(null);
-        unisoundAsrEngine.cancel(true);
-    }
-
-    private void copyTtsModel() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                AssetManager assetManager = context.getAssets();
-                try {
-                    String[] files = assetManager.list("");
-                    for (String file : files) {
-                        if (file.startsWith("frontend") || file.startsWith("backend")) {
-                            if (!(new File(Config.TTS_PATH + file).exists())) {
-                                AssetsUtils.copyAssetsFile(context, file, Config.TTS_PATH + file, false);
-                            }
-                        } else {
-                            AssetsUtils.copyAssetsFile(context, file,
-                                    Environment.getExternalStorageDirectory() + File.separator + "unisound"
-                                            + File.separator + file, false);
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-    }
 }
