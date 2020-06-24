@@ -14,6 +14,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -41,6 +42,8 @@ public class SplashActivity extends AppCompatActivity implements IAsrResultListe
 
     ConstraintLayout mLinearLayout;//总布局
     ImageView SplashMaskImage;//启动图遮罩
+
+    Intent ii = new Intent(SplashActivity.this, InformationService.class);
 
     //学生信息
     File file = new File(InformationService.savePath + InformationService.fileName);
@@ -220,6 +223,14 @@ public class SplashActivity extends AppCompatActivity implements IAsrResultListe
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void OnClick(View view) {
+        if (IsInit){
+            Log.d("WHZ","垃圾应用");
+            Intent myIntent = new Intent(context, LauncherActivity.class);
+            startActivity(myIntent);
         }
     }
 }

@@ -22,11 +22,13 @@
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
         <activity android:name="cn.EasertnDay.HuaZai.UserRegesite"
-                  android:theme="@style/Theme.AppCompat.NoActionBar">
+                  android:theme="@style/Theme.AppCompat.NoActionBar"
+                  android:launchMode="singleTask">
         </activity>
         <activity
                 android:name="cn.EasertnDay.HuaZai.SplashActivity"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:theme="@style/Theme.AppCompat.NoActionBar"
+                android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -37,7 +39,8 @@
         </activity>
         <activity
                 android:name="cn.EasertnDay.HuaZai.UserInformationSet"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:theme="@style/Theme.AppCompat.NoActionBar"
+                android:launchMode="singleTask">
         </activity>
         <activity android:name="cn.easternday.huazai.InformationService">
         </activity>
@@ -52,33 +55,39 @@
                 android:name="cn.EasertnDay.HuaZai.SecondaryPage.TZXX"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:screenOrientation="landscape"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:theme="@style/Theme.AppCompat.NoActionBar"
+                android:launchMode="singleTask">
         </activity>
         <activity
                 android:name="cn.EasertnDay.HuaZai.SecondaryPage.GJX"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:screenOrientation="landscape"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:theme="@style/Theme.AppCompat.NoActionBar"
+                android:launchMode="singleTask">
         </activity>
         <activity
                 android:name="cn.EasertnDay.HuaZai.SecondaryPage.ZXXL"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:screenOrientation="landscape"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:theme="@style/Theme.AppCompat.NoActionBar"
+                android:launchMode="singleTask">
         </activity>
         <activity
                 android:name="cn.EasertnDay.HuaZai.SecondaryPage.KWTBX"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:screenOrientation="landscape"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:theme="@style/Theme.AppCompat.NoActionBar"
+                android:launchMode="singleTask">
         </activity>
         <activity
                 android:name="cn.EasertnDay.HuaZai.LauncherActivity"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:screenOrientation="landscape"
-                android:theme="@style/Theme.AppCompat.NoActionBar">
+                android:theme="@style/Theme.AppCompat.NoActionBar"
+                android:launchMode="singleTask">
         </activity>
         <activity android:name="cn.EasertnDay.HuaZai.HuaZaiActivity">
+            android:launchMode="singleTask"
         </activity>
         <activity
                 android:name="cn.EasertnDay.HuaZai.BasicMainActivity"

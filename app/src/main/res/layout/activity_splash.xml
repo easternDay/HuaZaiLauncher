@@ -9,4 +9,11 @@
         android:background="@drawable/splash"
         android:id="@+id/SplashMe">
 
+    <Button
+            android:text="跳过"
+            android:onClick="OnClick"
+            android:layout_width="150dp"
+            android:layout_height="75dp" android:id="@+id/Skip_Button"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="50dp" android:layout_marginEnd="100dp"/>
 </android.support.constraint.ConstraintLayout>

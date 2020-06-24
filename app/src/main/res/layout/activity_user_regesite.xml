@@ -7,11 +7,19 @@
         android:layout_height="match_parent"
         tools:context="cn.EasertnDay.HuaZai.UserRegesite"
         android:background="@drawable/main_background">
-    <TextView android:layout_width="1000px" android:layout_height="200px" android:gravity="center"
-              android:background="@drawable/img_dikuang"
+    <TextView android:layout_width="500px" android:layout_height="200px" android:gravity="center"
+              android:background="@drawable/img_duihuakuang"
               app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-              app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="50dp"
-              android:text="测试" android:textSize="35dp" android:textColor="@color/colorPrimaryDark"
-              android:id="@+id/RegisterMessage"/>
+              app:layout_constraintTop_toTopOf="parent"
+              android:text="" android:textSize="35dp" android:textColor="@color/colorPrimaryDark"
+              android:id="@+id/RegisterMessage" app:layout_constraintHorizontal_bias="0.3"
+              app:layout_constraintBottom_toBottomOf="parent"/>
+    <ImageView
+            android:layout_width="400dp"
+            android:layout_height="400dp" app:srcCompat="@drawable/huazai" android:id="@+id/FuckingShow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.8" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"/>
 
 </android.support.constraint.ConstraintLayout>

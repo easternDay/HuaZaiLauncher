@@ -78,6 +78,18 @@ public class LauncherActivity extends AppCompatActivity {
         wifiInfo = wifiManager.getConnectionInfo();//WIFI信息
         WifiIcon = findViewById(R.id.wifiIcon);//WIFI图标
 
+        //悬浮窗
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {//判断系统版本
+            if (!Settings.canDrawOverlays(this)) {
+                Toast.makeText(this, "当前无权限，请授权", Toast.LENGTH_SHORT);
+                startActivityForResult(new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:" + getPackageName())), 0);
+            } else {
+                startService(new Intent(LauncherActivity.this, InformationService.class));
+            }
+        } else {
+            startService(new Intent(LauncherActivity.this, InformationService.class));
+        }
+
         //触摸设置进入调试
         SettingButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -322,4 +334,17 @@ public class LauncherActivity extends AppCompatActivity {
             }
         }
     };
+
+    //悬浮窗判断
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 0) {
+            if (!Settings.canDrawOverlays(this)) {
+                Toast.makeText(this, "授权失败", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "授权成功", Toast.LENGTH_SHORT).show();
+                startService(new Intent(LauncherActivity.this, InformationService.class));
+            }
+        }
+    }
 }
