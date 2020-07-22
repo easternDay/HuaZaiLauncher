@@ -86,8 +86,8 @@
                 android:theme="@style/Theme.AppCompat.NoActionBar"
                 android:launchMode="singleTask">
         </activity>
-        <activity android:name="cn.EasertnDay.HuaZai.HuaZaiActivity">
-            android:launchMode="singleTask"
+        <activity android:name="cn.EasertnDay.HuaZai.HuaZaiActivity"
+                  android:launchMode="singleTask">
         </activity>
         <activity
                 android:name="cn.EasertnDay.HuaZai.BasicMainActivity"
